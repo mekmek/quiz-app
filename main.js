@@ -12,27 +12,24 @@ let quizData = '';
 let correctCnt = 0;   // 正解数 
 let i = 0;            // クイズデータ配列のインデックス
 
-document.getElementById('start').addEventListener('click', function() {
+document.getElementById('start').addEventListener('click', async () => {
   title.textContent = '取得中';
   msgWindow.textContent = '少々お待ちください';
   document.getElementById('start').classList.add('hidden');
   
-  fetch(API_URL)
-    .then(response => {
-      if (!response.ok) throw new Error('データの取得に失敗しました');
-      return response.json();
-    })
-    .then(data => {
-      quizData = data.results;
-      createQuiz(i);
-    })
-    .catch(e => {
-      title.textContent = 'エラー';
-      msgWindow.textContent = e.message;
-    });
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) throw new Error('データの取得に失敗しました');
+    const data = await response.json();
+    quizData = data.results;
+    createQuiz(i);
+  } catch(e) {
+    title.textContent = 'エラー';
+    msgWindow.textContent = e.message;
+  }
 });
 
-restart.addEventListener('click', function() {
+restart.addEventListener('click', () => {
   location.reload();
 });
 
@@ -48,7 +45,7 @@ function createQuiz(num) {
   choicesArr.forEach(val => {
     const li = document.createElement('li');
     const btn = document.createElement('button');
-    btn.textContent = val;
+    btn.innerHTML = val;
     btn.addEventListener('click', (e) => {
       choices.textContent = null;
       if (e.target.textContent === quiz.correct_answer) correctCnt++;
