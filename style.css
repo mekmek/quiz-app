@@ -1,0 +1,26 @@
+#msg-window {
+  border: 1px solid gray;
+  padding: 8px;
+  margin-bottom: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+#quiz-info {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#choices {
+  display: flex;
+  flex-direction: column;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
